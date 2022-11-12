@@ -1,0 +1,7 @@
+# config.toml
+#
+# Use this file to configure how thehttpbot runs.
+# Any credentials should go in the `.env` file.
+
+[bot]
+sync_on_start = true
