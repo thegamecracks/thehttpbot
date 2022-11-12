@@ -8,6 +8,18 @@ from discord.ext import commands
 
 __all__ = ('TheHTTPBot',)
 
+INVITE_PERMISSIONS = discord.Permissions(
+    add_reactions=True,
+    attach_files=True,
+    change_nickname=True,
+    embed_links=True,
+    read_message_history=True,
+    read_messages=True,
+    send_messages=True,
+    send_messages_in_threads=True,
+    use_external_emojis=True,
+)
+
 log = logging.getLogger(__name__)
 
 
@@ -33,11 +45,19 @@ class TheHTTPBot(commands.Bot):
             for ext in self.extension_list:
                 await self.load_extension(ext, package=__name__)
 
+            log.info('Authenticating with the Discord API')
+            await self.login(os.getenv('BOT_TOKEN'))
+
             if self.sync_on_start:
                 log.info('Synchronizing application commands')
                 await self.tree.sync()
 
-            await self.login(os.getenv('BOT_TOKEN'))
+            invite = discord.utils.oauth_url(
+                self.application.id,
+                permissions=INVITE_PERMISSIONS,
+            )
+            logging.info('Invite this bot using the following link: %s', invite)
+
             await asyncio.sleep(math.inf)
 
     def start_serving(self) -> None:
