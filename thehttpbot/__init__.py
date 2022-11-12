@@ -2,7 +2,6 @@ import logging
 import os
 
 import discord
-import dotenv
 from fastapi import FastAPI, Request, status
 from fastapi.responses import Response
 from nacl.signing import VerifyKey
@@ -16,7 +15,6 @@ CONFIG_PATH = 'config.toml'
 
 # Configuration
 
-dotenv.load_dotenv()
 config = TheHTTPConfig.from_file(CONFIG_PATH)
 verify_key = VerifyKey(bytes.fromhex(os.getenv('PUBLIC_KEY')))
 

@@ -3,6 +3,7 @@ import logging
 import math
 import os
 
+import discord
 from discord.ext import commands
 
 __all__ = ('TheHTTPBot',)
@@ -16,7 +17,12 @@ class TheHTTPBot(commands.Bot):
     ]
 
     def __init__(self, *args, sync_on_start: bool, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(
+            *args,
+            command_prefix='!',
+            intents=discord.Intents.none(),
+            **kwargs
+        )
         self.sync_on_start = sync_on_start
         self.running_task: asyncio.Task | None = None
 
