@@ -20,20 +20,16 @@ configured using [Poetry][5].
 
 ## Usage
 
-1. Download the repository and navigate to the project root
+1. Download the repository and navigate to the project root.
 
-2. Install the dependencies via Poetry
-   (if you have not set up a virtual environment, Poetry will create one for you):
+2. Install the dependencies via Poetry (if you have not set up a
+   [virtual environment][6], Poetry will create one for you):
 
 ```sh
 poetry install
 ```
 
-3. Create a `.env` containing your bot token:
-
-```
-BOT_TOKEN=[your discord bot token from discord.com/developers/applications]
-```
+3. Copy the `example.env` file as `.env` and fill in the required credentials.
 
 4. Start the bot:
 
@@ -41,7 +37,7 @@ BOT_TOKEN=[your discord bot token from discord.com/developers/applications]
 poetry run python -m thehttpbot
 ```
 
-5. Use the invite link provided in the terminal to invite your bot
+5. Use the invite link provided in the terminal to invite your bot.
 
 ## License
 
@@ -52,3 +48,4 @@ This project uses the [MIT](LICENSE) license.
 [3]: https://www.uvicorn.org/
 [4]: https://fastapi.tiangolo.com/
 [5]: https://python-poetry.org/
+[6]: https://docs.python.org/3/tutorial/venv.html
