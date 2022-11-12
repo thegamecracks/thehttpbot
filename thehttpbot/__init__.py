@@ -1,9 +1,12 @@
 import logging
+import os
 
 import discord
 import dotenv
 from fastapi import FastAPI, Request, status
 from fastapi.responses import Response
+from nacl.signing import VerifyKey
+from nacl.exceptions import BadSignatureError
 
 from .bot import TheHTTPBot
 from .config import TheHTTPConfig
@@ -15,6 +18,7 @@ CONFIG_PATH = 'config.toml'
 
 dotenv.load_dotenv()
 config = TheHTTPConfig.from_file(CONFIG_PATH)
+verify_key = VerifyKey(bytes.fromhex(os.getenv('PUBLIC_KEY')))
 
 # Logging
 
@@ -47,7 +51,18 @@ async def has_logged_in(request: Request, call_next):
 
 @app.middleware("http")
 async def check_signature(request: Request, call_next):
-    # TODO signature checking
+    signature = request.headers['X-Signature-Ed25519']
+    timestamp = request.headers['X-Signature-Timestamp'].encode()
+    body = await request.body()
+
+    try:
+        verify_key.verify(timestamp + body, bytes.fromhex(signature))
+    except BadSignatureError:
+        return Response(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content='Invalid request signature',
+        )
+
     return await call_next(request)
 
 
