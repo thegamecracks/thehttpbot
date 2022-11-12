@@ -5,3 +5,7 @@
 
 [bot]
 sync_on_start = true
+
+[logging]
+# https://docs.python.org/3/library/logging.html#levels
+level = 20

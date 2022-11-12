@@ -31,10 +31,10 @@ poetry install
 
 3. Copy the `example.env` file as `.env` and fill in the required credentials.
 
-4. Start the bot:
+4. Start the bot and webserver:
 
 ```sh
-poetry run python -m thehttpbot
+poetry run uvicorn thehttpbot --reload --port 5000
 ```
 
 5. Use the invite link provided in the terminal to invite your bot.
