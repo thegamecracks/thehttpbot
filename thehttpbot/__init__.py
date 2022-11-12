@@ -71,4 +71,4 @@ async def post_interactions(interaction: Interaction):
     if interaction.type == 1:
         return {'type': 1}
 
-    # TODO dispatch interaction
+    bot._connection.parse_interaction_create(interaction)
